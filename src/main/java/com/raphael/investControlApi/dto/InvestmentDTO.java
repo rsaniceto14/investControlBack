@@ -1,7 +1,11 @@
 package com.raphael.investControlApi.dto;
 
+import com.raphael.investControlApi.model.Investment;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
+
+import java.math.BigDecimal;
+
 
 public class InvestmentDTO {
 
@@ -12,14 +16,22 @@ public class InvestmentDTO {
     private String type;
 
     @DecimalMin(value = "0.01", message = "Valor investido deve ser maior que 0")
-    private double valueInvested;
+    private BigDecimal valueInvested;
 
     @NotNull(message = "Data do investimento obrigatória")
     @PastOrPresent(message = "A data do investimento não pode estar no futuro.")
     private LocalDate investmentDate;
 
+    public InvestmentDTO(Investment investment) {
+        this.name =investment.getName();
+        this.type = investment.getType();
+        this.valueInvested = investment.getValueInvested();
+        this.investmentDate = investment.getInvestmentDate();
+        
+    }
 
-    public string getName() {
+
+    public String getName() {
         return name;
     }
     public void setName(String name) {
@@ -31,10 +43,10 @@ public class InvestmentDTO {
     public void setType(String type) {
         this.type = type;
     }
-    public double getValueInvested() {
+    public BigDecimal getValueInvested() {
         return valueInvested;
     }
-    public void setValueInvested(double valueInvested) {
+    public void setValueInvested(BigDecimal valueInvested) {
         this.valueInvested = valueInvested;
     }
     public LocalDate getInvestmentDate() {

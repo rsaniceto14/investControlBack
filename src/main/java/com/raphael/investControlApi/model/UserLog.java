@@ -6,12 +6,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
 @Document(collection = "logs")
-
 public class UserLog {
 
     @Id
     private String id;
-    privar String userName;
+    private String userName;
     private String action;
     private LocalDateTime timestamp;
 
@@ -44,5 +43,14 @@ public class UserLog {
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
+
     @Override
+    public String toString(){
+        return "UserLog{" +
+                "id='" + id + '\'' +
+                ", userName='" + userName + '\'' +
+                ", action='" + action + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
+    }
 }

@@ -1,7 +1,10 @@
 package com.raphael.investControlApi.model;
 
+import com.raphael.investControlApi.dto.InvestmentDTO;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "investments")
@@ -13,12 +16,21 @@ public class Investment {
 
     private String name;
     private String type;
-    private double valueInvested;
+    private BigDecimal valueInvested;
     private LocalDate investmentDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public Investment() {}
+
+    public Investment(InvestmentDTO dto) {
+        this.name = dto.getName();
+        this.type = dto.getType();
+        this.valueInvested = dto.getValueInvested();
+        this.investmentDate = dto.getInvestmentDate();
+    }
 
 
     public Long getId() {
@@ -37,10 +49,10 @@ public class Investment {
     public void setType(String type) {
         this.type = type;
     }
-    public double getValueInvested() {
+    public BigDecimal getValueInvested() {
         return valueInvested;
     }
-    public void setValueInvested(double valueInvested) {
+    public void setValueInvested(BigDecimal valueInvested) {
         this.valueInvested = valueInvested;
     }
     public LocalDate getInvestmentDate() {

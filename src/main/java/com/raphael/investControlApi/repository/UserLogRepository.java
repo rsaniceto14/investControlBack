@@ -1,4 +1,4 @@
-package com.raphael.investControlApi.model;
+package com.raphael.investControlApi.repository;
 import com.raphael.investControlApi.model.UserLog;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
