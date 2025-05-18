@@ -1,11 +1,19 @@
 package com.raphael.investControlApi.controller;
 
 import com.raphael.investControlApi.dto.InvestmentDTO;
+import com.raphael.investControlApi.model.User;
+import com.raphael.investControlApi.repository.UserRepository;
+
 import com.raphael.investControlApi.service.InvestmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.server.ResponseStatusException;
+import java.security.Principal;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -16,29 +24,40 @@ public class InvestmentController {
     @Autowired
     private InvestmentService service;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    private Long getUserId(Principal principal) {
+       String username = principal.getName();
+       return userRepository.findByUsername(username)
+               .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND))
+               .getId();
+    }
+
     @GetMapping
-    public List<InvestmentDTO> findAll() {
-        return service.findAll();
+    public ResponseEntity<Page<InvestmentDTO>> findAll(Pageable pageable, Principal principal) {
+        return ResponseEntity.ok(service.findAll(getUserId(principal), pageable));
     }
 
     @GetMapping("/{id}")
-    public Optional<InvestmentDTO> getById(@PathVariable Long id) {
-        return service.findById(id);
+    public ResponseEntity<InvestmentDTO> getById(@PathVariable Long id, Principal principal) {
+        return ResponseEntity.ok(service.findById(id, getUserId(principal)));
     }
 
     @PostMapping
-    public InvestmentDTO create(@RequestBody InvestmentDTO dto) {
-        return service.save(dto);
+    public ResponseEntity<InvestmentDTO> create(@RequestBody InvestmentDTO dto, Principal principal) {
+        return ResponseEntity.ok(service.save(dto, getUserId(principal)));
     }
 
     @PutMapping("/{id}")
-    public InvestmentDTO update(@PathVariable Long id, @RequestBody InvestmentDTO dto) {
-        return service.update(id, dto);
+    public ResponseEntity<InvestmentDTO> update(@PathVariable Long id, @RequestBody InvestmentDTO dto, Principal principal) {
+        return ResponseEntity.ok(service.update(id, dto, getUserId(principal)));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id, Principal principal) {
+        service.delete(id, getUserId(principal));
+        return ResponseEntity.noContent().build();
     }
 
 

@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 
 public class InvestmentDTO {
 
+    private Long id;
+
     @NotBlank(message = "Nome obrigatório")
     private String name;
 
@@ -23,6 +25,7 @@ public class InvestmentDTO {
     private LocalDate investmentDate;
 
     public InvestmentDTO(Investment investment) {
+        this.id = investment.getId();
         this.name =investment.getName();
         this.type = investment.getType();
         this.valueInvested = investment.getValueInvested();
@@ -30,7 +33,15 @@ public class InvestmentDTO {
         
     }
 
+    public InvestmentDTO() {
+    }
 
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getName() {
         return name;
     }
