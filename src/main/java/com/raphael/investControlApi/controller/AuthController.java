@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
+import com.raphael.investControlApi.security.JwtUtils;
+import com.raphael.investControlApi.dto.AuthResponse;
+
 
 import java.util.Date;
 import java.util.Optional;
@@ -22,8 +25,11 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    // @Value("${jwt.secret}")
-    // private String jwtSecret;
+    @Value("${jwt.secret}")
+    private String secret;
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody AuthRequest request) {
@@ -37,12 +43,12 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequest request) {
+    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         Optional<User> user = userService.login(request.getUsername(), request.getPassword());
 
         if(user.isPresent()){
-            String token = generateJwtToken(user.get());
-            return ResponseEntity.ok(token);
+            String token = jwtUtils.generateJwtToken(user.get());
+            return ResponseEntity.ok(new AuthResponse(token));
 
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario ou senha invalidos");
@@ -50,6 +56,5 @@ public class AuthController {
     }
 
 
-   
 
 }

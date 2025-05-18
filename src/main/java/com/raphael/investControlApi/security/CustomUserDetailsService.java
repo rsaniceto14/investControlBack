@@ -2,20 +2,26 @@ package com.raphael.investControlApi.security;
 
 import com.raphael.investControlApi.model.User;
 import com.raphael.investControlApi.repository.UserRepository;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import com.raphael.investControlApi.service.UserService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+
+
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
+
+
 import org.springframework.stereotype.Service;
 import java.util.Collections;
 
 
 
-@Service
-public class UserDetailsService implements UserService {
+@Service 
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public UserDetailsService(UserRepository userRepository) {
+    public CustomUserDetailsService (UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

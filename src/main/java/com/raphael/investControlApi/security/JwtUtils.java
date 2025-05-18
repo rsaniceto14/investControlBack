@@ -1,5 +1,6 @@
 package com.raphael.investControlApi.security;
 
+import com.raphael.investControlApi.model.User;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +11,7 @@ import java.util.Date;
 
 
 
-
+@Component
 public class JwtUtils {
 
 @Value("${jwt.secret}")
@@ -18,14 +19,14 @@ private String secret;
 
 private final long expirationTime = 86400000; // expires in 1 day
 
-private String generateJwtToken(User user) {
+public String generateJwtToken(User user) {
 
 
     return Jwts.builder()
             .setSubject(user.getUsername())
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + expirationTime)) 
-            .signWith(SignatureAlgorithm.HS256, jwtSecret)
+            .signWith(SignatureAlgorithm.HS256, secret)
             .compact();
 }
 
