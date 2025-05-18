@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.server.ResponseStatusException;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.security.Principal;
 
 import java.util.Optional;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 @RestController 
 @RequestMapping("/investments")
+@SecurityRequirement(name = "bearerAuth")
 public class InvestmentController {
 
     @Autowired
