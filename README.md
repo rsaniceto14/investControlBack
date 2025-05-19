@@ -25,22 +25,22 @@
 
 ### Investments 
 
-- GET  /investments         Lista todos investimentos.
+- GET  /investments  &nbsp;&nbsp;&nbsp;       Lista todos investimentos.
 
-- GET  /investments/{id}    Detalha um investimento.
+- GET  /investments/{id}  &nbsp;&nbsp;&nbsp;  Detalha um investimento.
 
-- POST /investments         Cria novo investimento.
+- POST /investments     &nbsp;&nbsp;&nbsp;    Cria novo investimento.
 
-- PUT  /investments/{id}    Edita um investimento.
+- PUT  /investments/{id}  &nbsp;&nbsp;&nbsp;  Edita um investimento.
 
-- DELETE  /investments/{id} Deleta um investimento.
+- DELETE  /investments/{id} &nbsp;&nbsp;&nbsp; Deleta um investimento.
 
 # Swagger
 
-- Acesse [text](http://localhost:8080/swagger-ui/index.html)
+- Acesse [localhost](http://localhost:8080/swagger-ui/index.html)
 - Faça login via /auth/login
 - Clique em "Authorize"
-- E insira o Bearer <token>
+- E insira o Bearer token
   
 
 # Log de Erros no Mongo 
